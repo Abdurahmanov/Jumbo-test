@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const state = {
     data: [],
+    center: {},
+    zoom: 7,
 };
 
 const getters = {
@@ -9,7 +11,7 @@ const getters = {
         return new Set(state.data.map(item => item.city).filter(Boolean))
     },
     getStores: state => {
-        return new Set(state.data.map(item => item.addressName).filter(Boolean))
+        return new Set(state.data.map(item => item.addressName.replace(/Jumbo /gi,'')).filter(Boolean))
     },
     getSearchResult: state => search => {
         if(search !== '') {
@@ -18,6 +20,25 @@ const getters = {
     },
     getFilterStoresByCities: state => city => {
         return state.data.filter(item => item.city === city)
+    },
+
+    getMarkers: state => {
+        return state.data.map(item => {
+            return {
+                ...item,
+                addressName: item.addressName.replace(/Jumbo /gi,''),
+                id: item.uuid,
+                position: { lat: Number(item.latitude), lng: Number(item.longitude) }
+            }
+        })
+    },
+    getCenter: (state, getters) => index => {
+        console.log(index)
+        return getters.getMarkers[index].position
+    },
+
+    getZoom: state => zoom => {
+        return zoom
     }
 }
 
@@ -31,7 +52,15 @@ const actions = {
 
 const mutations = {
     setData(state, { result }) {
-        state.data = result;
+        state.data = result.map(item => {
+            return {
+                ...item,
+                addressName: item.addressName.replace(/Jumbo /gi,''),
+                id: item.uuid,
+                position: { lat: Number(item.latitude), lng: Number(item.longitude) }
+            }
+        });
+        state.center = state.data[1].position
     },
 };
 

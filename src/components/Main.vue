@@ -9,17 +9,45 @@
     <div v-if="show === 'cities'">
       <Cities/>
     </div>
+    <div class="wrapper"  v-if="getMarkersList.length">
+      <GoogleMapLoader
+          :mapConfig="mapConfig"
+          apiKey=""
+      >
+        <template v-slot="{ google, map }">
+          <GoogleMapMarker
+              v-for="marker in getMarkersList"
+              :key="marker.id"
+              :marker="marker"
+              :google="google"
+              :map="map"
+          />
+        </template>
+      </GoogleMapLoader>
+      <MarketList/>
+    </div>
+
+
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import Stores from './Stores';
 import Cities from './Cities';
-import { mapGetters } from 'vuex';
+import GoogleMapLoader from './GoogleMapLoader';
+import GoogleMapMarker from './GoogleMapMarker';
+import MarketList from "./MarketList";
+
+import { mapSettings } from "@/constants/mapSettings";
 export default {
   components: {
     Stores,
     Cities,
+    GoogleMapLoader,
+    GoogleMapMarker,
+    MarketList
   },
   data() {
     return {
@@ -33,10 +61,25 @@ export default {
   computed:{
     ...mapGetters([
       'getSearchResult',
-      'getFilterStoresByCities'
+      'getFilterStoresByCities',
+      'getMarkers',
+      'getCenter',
+      'getZoom',
     ]),
     getSearch() {
       return this.getSearchResult(this.search)
+    },
+
+    getMarkersList() {
+      return this.getMarkers
+    },
+
+    mapConfig() {
+      return {
+        ...mapSettings,
+        zoom: this.getZoom(7),
+        center: this.getCenter(1)
+      };
     },
 
   },
@@ -44,13 +87,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-ul {
-  list-style: none;
-}
+  ul {
+    list-style: none;
+  }
 
-li {
-  display: inline-block;
-  background: #fdc513;
-  margin: 5px;
-}
+  li {
+    display: inline-block;
+    background: #fdc513;
+    margin: 5px;
+  }
+
+  .wrapper {
+    position: relative;
+  }
 </style>
