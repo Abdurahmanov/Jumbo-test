@@ -20,6 +20,12 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      isClick: false,
+      m: null,
+    };
+  },
   computed: {
     ...mapGetters([
       'getListRef',
@@ -37,6 +43,8 @@ export default {
       icon: image,
     });
 
+    this.m = marker;
+
     const infoWindow = new InfoWindow({
       content: `<div>
                     <div><strong>${this.marker.addressName}</strong></div>
@@ -46,13 +54,25 @@ export default {
                 </div>`
     })
 
-    marker.addListener("click", () => {
-      infoWindow.open(marker.get("map"), marker);
+    marker.addListener("click", () => this.clickHandler(infoWindow));
+  },
+  methods: {
+    clickHandler(infoWindow) {
+      if(this.isClick) {
+        infoWindow.close()
+      } else {
+        infoWindow.open(this.m.get("map"), this.m);
+        this.getListRef.scrollToIndex(this.index);
+        this.$store.dispatch('getListItemActiveIndex', this.index);
+      }
       this.map.setZoom(15);
-      this.map.panTo(marker.getPosition());
-      this.getListRef.scrollToIndex(this.index);
-      this.$store.dispatch('getListItemActiveIndex', this.index);
-    });
+      this.map.panTo(this.m.getPosition());
+      this.isClick = !this.isClick
+    }
+  },
+  beforeDestroy() {
+    this.m.setMap(null);
+    // this.m.removeListener("click", () => this.clickHandler(''))
   },
   render() {
     return null

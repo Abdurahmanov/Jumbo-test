@@ -16,7 +16,7 @@
       >
         <template v-slot="{ google, map }">
           <GoogleMapMarker
-              v-for="(marker, index) in getMarkers"
+              v-for="(marker, index) in getSearch"
               :key="marker.id"
               :marker="marker"
               :google="google"
@@ -25,7 +25,7 @@
           />
         </template>
       </GoogleMapLoader>
-      <MarketList/>
+      <MarketList :getSearch="getSearch"/>
     </div>
     <div v-else>Loading...</div>
 
@@ -76,7 +76,7 @@ export default {
     mapConfig() {
       return {
         ...mapSettings,
-        center: this.getMarkers[1].position,
+        center: this.getMarkers[0].position,
       };
     },
 

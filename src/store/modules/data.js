@@ -19,8 +19,9 @@ const getters = {
     },
     getSearchResult: state => search => {
         if(search !== '') {
-            return state.data.find(item => item.city.toLowerCase() === search.toLowerCase())
+            return state.data.filter(item => item.city.toLowerCase() === search.toLowerCase())
         }
+        return state.data
     },
     getFilterStoresByCities: state => city => {
         return state.data.filter(item => item.city === city)

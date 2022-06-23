@@ -3,9 +3,9 @@
     <virtual-list
         class="list"
         ref="list"
-        style="height: 360px; overflow-y: auto;"
+        style="min-height: 112px; overflow-y: auto; max-height: 360px"
         :data-key="'id'"
-        :data-sources="getMarkers"
+        :data-sources="getSearch"
         :data-component="item"
         :estimate-size="105"
     />
@@ -17,6 +17,12 @@
   import {mapGetters} from "vuex";
 
   export default {
+    props: {
+      getSearch: {
+        type: Array,
+        required: true
+      },
+    },
     data() {
       return {
         item: Item,
@@ -40,5 +46,6 @@
     background: white;
     left: 20px;
     width: 350px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 25%);
   }
 </style>
