@@ -2,11 +2,12 @@
   <div class="list-block">
     <virtual-list
         class="list"
+        ref="list"
         style="height: 360px; overflow-y: auto;"
         :data-key="'id'"
-        :data-sources="this.getMarkers"
+        :data-sources="getMarkers"
         :data-component="item"
-        :estimate-size="50"
+        :estimate-size="105"
     />
   </div>
 </template>
@@ -16,7 +17,6 @@
   import {mapGetters} from "vuex";
 
   export default {
-    name: 'App',
     data() {
       return {
         item: Item,
@@ -26,7 +26,10 @@
       ...mapGetters([
         'getMarkers',
       ]),
-    }
+    },
+    mounted() {
+      this.$store.dispatch('getListRef', this.$refs.list);
+    },
   }
 </script>
 

@@ -9,30 +9,32 @@
     <div v-if="show === 'cities'">
       <Cities/>
     </div>
-    <div class="wrapper"  v-if="getMarkersList.length">
+    <div class="wrapper" v-if="!this.data.isLoading">
       <GoogleMapLoader
           :mapConfig="mapConfig"
           apiKey=""
       >
         <template v-slot="{ google, map }">
           <GoogleMapMarker
-              v-for="marker in getMarkersList"
+              v-for="(marker, index) in getMarkers"
               :key="marker.id"
               :marker="marker"
               :google="google"
               :map="map"
+              :index="index"
           />
         </template>
       </GoogleMapLoader>
       <MarketList/>
     </div>
+    <div v-else>Loading...</div>
 
 
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 import Stores from './Stores';
 import Cities from './Cities';
@@ -63,22 +65,18 @@ export default {
       'getSearchResult',
       'getFilterStoresByCities',
       'getMarkers',
-      'getCenter',
-      'getZoom',
+    ]),
+    ...mapState([
+        'data'
     ]),
     getSearch() {
       return this.getSearchResult(this.search)
     },
 
-    getMarkersList() {
-      return this.getMarkers
-    },
-
     mapConfig() {
       return {
         ...mapSettings,
-        zoom: this.getZoom(7),
-        center: this.getCenter(1)
+        center: this.getMarkers[1].position,
       };
     },
 

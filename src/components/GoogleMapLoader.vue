@@ -41,6 +41,7 @@ export default {
         .then((google) => {
           this.google = google
           this.map = new google.maps.Map(mapContainer, this.mapConfig);
+          this.$store.dispatch('getMap', this.map);
         })
         .catch(e => {
           // eslint-disable-next-line no-console
