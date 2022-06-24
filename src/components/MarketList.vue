@@ -1,5 +1,5 @@
 <template>
-  <div class="list-block">
+  <div class="list__wrapper">
     <virtual-list
         class="list"
         ref="list"
@@ -8,7 +8,9 @@
         :data-sources="getSearch"
         :data-component="item"
         :estimate-size="105"
+        v-if="!isNotFound"
     />
+    <div v-else class="notFound">Not Found</div>
   </div>
 </template>
 
@@ -22,6 +24,10 @@
         type: Array,
         required: true
       },
+      isNotFound: {
+        type: Boolean,
+        required: true
+      }
     },
     data() {
       return {
@@ -40,12 +46,15 @@
 </script>
 
 <style lang="scss" scoped>
-  .list-block {
-    position: absolute;
-    top: 20px;
-    background: white;
-    left: 20px;
-    width: 350px;
-    box-shadow: 0 0 15px rgb(0 0 0 / 25%);
+  .list {
+    &__wrapper {
+      background: white;
+      box-shadow: 0 0 15px rgb(0 0 0 / 25%);
+      border-radius: 4px;
+    }
+  }
+
+  .notFound {
+    padding: 20px
   }
 </style>
