@@ -10,16 +10,13 @@
 export default {
   data() {
     return {
-      stores: [
-        { uuid: 123, addressName: "Store 1" },
-        { uuid: 456, addressName: "Store 2" },
-      ],
+      stores: [{ uuid: 123, addressName: 'Store 1' }, { uuid: 456, addressName: 'Store 2' }],
     };
   },
-  computed:{
+  computed: {
     getStoresName() {
-      return this.$store.getters.getStores
-    }
+      return this.$store.getters.getStores;
+    },
   },
 };
 </script>

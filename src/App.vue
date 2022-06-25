@@ -1,16 +1,20 @@
 <template>
   <div id="app">
-    <Main  />
+    <Header/>
+    <div class="wrapper">
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
-import Main from "./components/Main";
-
+import Header from '@/components/Header';
 export default {
   name: "App",
   components: {
-    Main
+    Header
   }
 };
 </script>
@@ -21,10 +25,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 *{
   box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  padding: 0 30px;
 }
 </style>

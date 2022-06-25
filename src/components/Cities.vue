@@ -15,13 +15,13 @@ export default {
   },
   methods: {
     clickOnCity(city) {
-      this.filteredCities = this.$store.getters.getFilterStoresByCities(city)
-    }
+      this.filteredCities = this.$store.getters.getFilterStoresByCities(city);
+    },
   },
-  computed:{
+  computed: {
     getCitiesName() {
-      return this.$store.getters.getCities
-    }
+      return this.$store.getters.getCities;
+    },
   },
 };
 </script>
