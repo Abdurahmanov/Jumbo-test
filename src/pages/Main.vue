@@ -26,17 +26,7 @@
         </template>
       </GoogleMapLoader>
       <div class="list-block">
-        <div class="search-block">
-          <input
-            type="text"
-            class="input"
-            v-model="search"
-            placeholder="Enter the name of the city"
-            @keyup.enter="onSearch()"
-          />
-          <button class="cross" v-show="search" @click="onClear()">+</button>
-          <button class="btn" @click="onSearch()">Search</button>
-        </div>
+        <SearchBlock @onSearch="onSearch($event)" @onClear="onClear()" />
         <MarketList :getSearch="filteredCities ? filteredCities : getMarkers" :isNotFound="isNotFound" />
       </div>
     </div>
@@ -50,6 +40,7 @@ import { mapGetters, mapState } from 'vuex';
 import GoogleMapLoader from '@/components/GoogleMapLoader';
 import GoogleMapMarker from '@/components/GoogleMapMarker';
 import MarketList from '@/components/MarketList';
+import SearchBlock from '@/components/SearchBlock';
 
 import { mapSettings } from '@/constants/mapSettings';
 import { filters } from '@/constants/filters';
@@ -58,10 +49,10 @@ export default {
     GoogleMapLoader,
     GoogleMapMarker,
     MarketList,
+    SearchBlock,
   },
   data() {
     return {
-      search: '',
       filteredCities: undefined,
       filterType: 'all',
       filters: filters,
@@ -75,28 +66,21 @@ export default {
       this.$store.dispatch('getCenter', this.filteredCities[0].position);
       this.$store.dispatch('getZoom', zoom);
     },
-    onSearch() {
-      this.filteredCities = this.getSearchResult(this.search);
+    onSearch(str) {
+      this.filteredCities = this.getSearchResult(str);
       this.filterType = 'all';
       if (!this.isNotFound) {
         this.changeCenterAndZoomMap();
       }
     },
     onClear() {
-      this.search = '';
       this.changeCenterAndZoomMap(7);
       this.filterType = 'all';
     },
     onFilterChange(type) {
       this.filteredCities = this.getFilters(type);
       this.filterType = type;
-    },
-  },
-  watch: {
-    search: function(newVal) {
-      if (newVal === '') {
-        this.onSearch();
-      }
+      this.changeCenterAndZoomMap(7);
     },
   },
   computed: {
@@ -116,7 +100,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .map {
   position: relative;
   margin-top: 10px;
@@ -127,59 +111,6 @@ export default {
   top: 20px;
   left: 20px;
   width: 350px;
-}
-
-.input {
-  height: 40px;
-  width: 100%;
-  font-size: 16px;
-  padding: 0 105px 0 15px;
-  border: 0;
-  outline: none;
-  border-radius: 4px;
-  background-color: #fff;
-}
-
-.search-block {
-  margin-bottom: 10px;
-  position: relative;
-  box-shadow: 0 0 15px rgb(0 0 0 / 25%);
-}
-
-.btn {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  font-size: 12px;
-  color: #262626;
-  padding: 7px 10px;
-  border: 1px solid #262626;
-  border-radius: 4px;
-  background: white;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-
-  &:hover {
-    background: #262626;
-    color: white;
-  }
-
-  //&:disabled {
-  //  opacity: 0.35;
-  //  cursor: not-allowed;
-  //}
-}
-
-.cross {
-  position: absolute;
-  top: -9px;
-  right: 75px;
-  font-size: 50px;
-  transform: rotate(45deg);
-  background: transparent;
-  border: none;
-  cursor: pointer;
 }
 
 .filters {

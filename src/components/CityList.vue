@@ -1,13 +1,19 @@
 <template>
-  <virtual-list
-    class="list"
-    ref="list"
-    style="min-height: 85px; overflow-y: auto; max-height: 500px"
-    :data-key="'city'"
-    :data-sources="list"
-    :data-component="item"
-    :estimate-size="85"
-  />
+  <div class="list-block">
+    <virtual-list
+      class="list"
+      ref="list"
+      style="min-height: 85px; overflow-y: auto; max-height: 500px"
+      :data-key="'city'"
+      :data-sources="list"
+      :data-component="item"
+      :estimate-size="85"
+      v-if="!isNotFound"
+    />
+    <div v-else>
+      Not Found
+    </div>
+  </div>
 </template>
 
 <script>
@@ -36,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list {
+.list-block {
   width: 30%;
   border-right: 1px solid lightgrey;
 }

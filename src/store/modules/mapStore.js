@@ -7,9 +7,6 @@ const state = {
 };
 
 const getters = {
-  getStores: (state, getters, rootState) => {
-    return new Set(rootState.dataStore.data.map(item => item.addressName.replace(/Jumbo /gi, '')).filter(Boolean));
-  },
   getSearchResult: (state, getters, rootState) => search => {
     if (search !== '') {
       return rootState.dataStore.data.filter(item => item.city.toLowerCase() === search.toLowerCase());

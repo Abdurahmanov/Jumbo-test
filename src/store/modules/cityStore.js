@@ -20,6 +20,12 @@ const getters = {
       ).values(),
     ];
   },
+  getCitySearchResult: (state, getters) => search => {
+    if (search !== '') {
+      return getters.getUniqCities.filter(item => item.city.toLowerCase() === search.toLowerCase());
+    }
+    return getters.getUniqCities;
+  },
 };
 
 const actions = {
