@@ -12,16 +12,7 @@
         {{ item.title }}
       </button>
     </div>
-    <button @click.prevent="show = 'stores'">Show stores</button>
-    <button @click.prevent="show = 'cities'">Show cities</button>
-
-    <div v-if="show === 'stores'">
-      <Stores />
-    </div>
-    <div v-if="show === 'cities'">
-      <Cities />
-    </div>
-    <div class="map" v-if="!this.data.isLoading">
+    <div class="map" v-if="!this.dataStore.isLoading">
       <GoogleMapLoader :mapConfig="mapConfig" apiKey="">
         <template v-slot="{ google, map }">
           <GoogleMapMarker
@@ -56,8 +47,6 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 
-import Stores from '@/components/Stores';
-import Cities from '@/components/Cities';
 import GoogleMapLoader from '@/components/GoogleMapLoader';
 import GoogleMapMarker from '@/components/GoogleMapMarker';
 import MarketList from '@/components/MarketList';
@@ -66,15 +55,12 @@ import { mapSettings } from '@/constants/mapSettings';
 import { filters } from '@/constants/filters';
 export default {
   components: {
-    Stores,
-    Cities,
     GoogleMapLoader,
     GoogleMapMarker,
     MarketList,
   },
   data() {
     return {
-      show: '',
       search: '',
       filteredCities: undefined,
       filterType: 'all',
@@ -114,8 +100,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getSearchResult', 'getFilterStoresByCities', 'getMarkers', 'getFilters']),
-    ...mapState(['data']),
+    ...mapGetters(['getSearchResult', 'getMarkers', 'getFilters']),
+    ...mapState(['dataStore']),
     isNotFound() {
       return this.filteredCities && this.filteredCities.length === 0;
     },

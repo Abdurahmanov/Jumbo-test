@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <virtual-list
-        class="list"
-        ref="list"
-        style="min-height: 112px; overflow-y: auto; max-height: 360px"
-        :data-key="'id'"
-        :data-sources="getSearch"
-        :data-component="item"
-        :estimate-size="105"
-        v-if="!isNotFound"
-    />
+  <div class="">
+    <div class="block" v-if="!this.dataStore.isLoading">
+      <CityList :list="getCitiesName" isNotFound="false" />
+      <TableStores :item="getCitiesName[this.cityStore.activeIndex]" />
+    </div>
+    <div v-else>Loading...</div>
   </div>
 </template>
 
 <script>
+import CityList from '@/components/CityList';
+import TableStores from '@/components/TableStores';
+import { mapState } from 'vuex';
 export default {
+  components: {
+    CityList,
+    TableStores,
+  },
   data() {
     return {
       filteredCities: [],
@@ -23,15 +25,18 @@ export default {
   mounted() {
     this.$store.dispatch('getData');
   },
-  methods: {
-    clickOnCity(city) {
-      this.filteredCities = this.$store.getters.getFilterStoresByCities(city)
-    }
-  },
-  computed:{
+  methods: {},
+  computed: {
+    ...mapState(['dataStore', 'cityStore']),
     getCitiesName() {
-      return this.$store.getters.getCities
-    }
+      return this.$store.getters.getUniqCities;
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.block {
+  display: flex;
+}
+</style>

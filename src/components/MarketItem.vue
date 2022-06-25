@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="item"
-    :class="{ item_active: this.$store.state.data.listItemActiveIndex === this.index }"
-    @click="clickOnItem()"
-  >
+  <div class="item" :class="{ item_active: this.mapStore.listItemActiveIndex === this.index }" @click="clickOnItem()">
     <div class="item__img">
       <img :src="imgSource" alt="marker" />
     </div>
@@ -19,6 +15,7 @@
 <script>
 import pin from '@/assets/pin.webp';
 import pinNew from '@/assets/pinNew.webp';
+import { mapState } from 'vuex';
 
 export default {
   name: 'item',
@@ -41,6 +38,7 @@ export default {
     },
   },
   computed: {
+    ...mapState(['mapStore']),
     imgSource() {
       return this.source.newStore !== 0 ? pinNew : pin;
     },
@@ -48,7 +46,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .item {
   display: flex;
   border-bottom: 1px solid lightgrey;
