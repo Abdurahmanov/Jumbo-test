@@ -18,3 +18,4 @@ out/
 .gradle/**
 target/
 .idea_modules/
+.DS_Store
