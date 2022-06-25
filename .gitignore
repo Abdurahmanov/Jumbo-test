@@ -1,0 +1,21 @@
+node_modules
+
+build
+.yarn-cache
+
+# vscode
+.vscode/
+
+# idea
+.idea
+.idea/**
+*.iml
+*.rej
+gradle/wrapper/**
+gradlew
+gradlew.bat
+out/
+.gradle/**
+target/
+.idea_modules/
+.DS_Store
