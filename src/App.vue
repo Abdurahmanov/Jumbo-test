@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Stores  />
+    <Main  />
   </div>
 </template>
 
 <script>
-import Stores from "./components/Stores";
+import Main from "./components/Main";
 
 export default {
   name: "App",
   components: {
-    Stores
+    Main
   }
 };
 </script>
@@ -20,8 +20,11 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+*{
+  box-sizing: border-box;
 }
 </style>
