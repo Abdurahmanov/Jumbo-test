@@ -15,7 +15,7 @@
 <script>
 import pin from '@/assets/pin.webp';
 import pinNew from '@/assets/pinNew.webp';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'item',
@@ -31,10 +31,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['getCenter', 'getListItemActiveIndex', 'getZoom']),
     clickOnItem() {
-      this.$store.dispatch('getCenter', this.source.position);
-      this.$store.dispatch('getListItemActiveIndex', this.index);
-      this.$store.dispatch('getZoom', 15);
+      this.getCenter(this.source.position);
+      this.getListItemActiveIndex(this.index);
+      this.getZoom(15);
     },
   },
   computed: {

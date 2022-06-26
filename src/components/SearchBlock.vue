@@ -56,6 +56,7 @@ export default {
   position: relative;
   box-shadow: 0 0 15px rgb(0 0 0 / 25%);
   border: 1px solid #d3d3d3;
+  border-radius: 4px;
 }
 
 .btn {

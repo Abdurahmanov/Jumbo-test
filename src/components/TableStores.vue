@@ -56,13 +56,10 @@ table {
   width: 100%;
 }
 
-th {
-  text-align: left;
-}
-
 td,
 th {
   padding: 10px 0;
+  text-align: center;
 }
 
 tr {
