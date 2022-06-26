@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Item from './MarketItem';
+import Item from './StoreItem';
 import { mapGetters } from 'vuex';
 
 export default {

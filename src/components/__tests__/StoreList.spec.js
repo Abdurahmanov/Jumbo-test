@@ -1,12 +1,12 @@
-import { createLocalVue, shallowMount } from "@vue/test-utils";
-import MarketList from "@/components/MarketList";
-import Vuex from "vuex";
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+import StoreList from '@/components/StoreList';
+import Vuex from 'vuex';
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("Market list", () => {
+describe('Market list', () => {
   let actions;
   let store;
 
@@ -20,7 +20,7 @@ describe("Market list", () => {
   });
 
   it('Should show "Not Found" if prop isNotFound is true', () => {
-    const wrapper = shallowMount(MarketList, {
+    const wrapper = shallowMount(StoreList, {
       propsData: {
         isNotFound: true,
         getSearch: [],
@@ -29,6 +29,6 @@ describe("Market list", () => {
       localVue,
     });
 
-    expect(wrapper.find("div").text()).toBe("Not Found");
+    expect(wrapper.find('div').text()).toBe('Not Found');
   });
 });

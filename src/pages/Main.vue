@@ -27,7 +27,7 @@
       </GoogleMapLoader>
       <div class="list-block">
         <SearchBlock @onSearch="onSearch($event)" @onClear="onClear()" />
-        <MarketList :getSearch="filteredCities ? filteredCities : getMarkers" :isNotFound="isNotFound" />
+        <StoreList :getSearch="filteredCities ? filteredCities : getMarkers" :isNotFound="isNotFound" />
       </div>
     </div>
     <div v-else>Loading...</div>
@@ -39,7 +39,7 @@ import { mapGetters, mapState } from 'vuex';
 
 import GoogleMapLoader from '@/components/GoogleMapLoader';
 import GoogleMapMarker from '@/components/GoogleMapMarker';
-import MarketList from '@/components/MarketList';
+import StoreList from '@/components/StoreList';
 import SearchBlock from '@/components/SearchBlock';
 
 import { mapSettings } from '@/constants/mapSettings';
@@ -48,7 +48,7 @@ export default {
   components: {
     GoogleMapLoader,
     GoogleMapMarker,
-    MarketList,
+    StoreList,
     SearchBlock,
   },
   data() {

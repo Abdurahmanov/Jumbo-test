@@ -1,6 +1,4 @@
 const state = {
-  center: {},
-  zoom: 7,
   map: undefined,
   listRef: undefined,
   listItemActiveIndex: undefined,
