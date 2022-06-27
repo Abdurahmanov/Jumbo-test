@@ -10,7 +10,11 @@
       :estimate-size="105"
       v-if="!isNotFound"
     />
-    <div v-else class="notFound">Not Found</div>
+    <div v-else class="notFound">
+      <p>
+        Not Found
+      </p>
+    </div>
   </div>
 </template>
 

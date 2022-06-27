@@ -23,6 +23,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  min-height: 100vh;
 }
 
 * {
@@ -35,5 +36,9 @@ body {
 
 .wrapper {
   padding: 0 30px;
+}
+
+p {
+  margin: 0;
 }
 </style>

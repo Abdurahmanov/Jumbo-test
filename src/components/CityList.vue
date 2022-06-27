@@ -11,7 +11,9 @@
       v-if="!isNotFound"
     />
     <div v-else>
-      Not Found
+      <p>
+        Not Found
+      </p>
     </div>
   </div>
 </template>
@@ -30,14 +32,11 @@ export default {
       default: false,
     },
   },
-  components: {},
   data() {
     return {
       item: Item,
     };
   },
-  methods: {},
-  computed: {},
 };
 </script>
 

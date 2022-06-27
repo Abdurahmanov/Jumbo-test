@@ -25,7 +25,9 @@
       </div>
     </div>
     <div v-else class="empty">
-      Please click on the item on the left
+      <p>
+        Please click on the item on the left
+      </p>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <SearchBlock @onSearch="onSearch($event)" @onClear="onClear()"></SearchBlock>
     <div class="block" v-if="!this.dataStore.isLoading">
       <CityList :list="filteredCities ? filteredCities : getUniqCities" :isNotFound="isNotFound" />
@@ -7,7 +7,11 @@
         :item="filteredCities ? filteredCities[this.cityStore.activeIndex] : getUniqCities[this.cityStore.activeIndex]"
       />
     </div>
-    <div v-else>Loading...</div>
+    <div v-else>
+      <p>
+        Loading...
+      </p>
+    </div>
   </div>
 </template>
 

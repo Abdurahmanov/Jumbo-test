@@ -30,7 +30,11 @@
         <StoreList :getSearch="filteredCities ? filteredCities : getMarkers" :isNotFound="isNotFound" />
       </div>
     </div>
-    <div v-else>Loading...</div>
+    <div v-else>
+      <p>
+        Loading...
+      </p>
+    </div>
   </div>
 </template>
 

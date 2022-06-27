@@ -22,13 +22,15 @@
           <button class="cross cross_small" @click.stop="onRemoveSearchedItem(item)">+</button>
         </div>
       </div>
-      <div class="suggestion__empty" v-else><p>Do a search and the city will be added</p></div>
+      <div class="suggestion__empty" v-else>
+        <p>Do a search and the city will be added</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -51,6 +53,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateSearchedData', 'removeSearchedDataItem']),
     onClear() {
       this.$emit('onClear');
       this.search = '';
@@ -62,7 +65,7 @@ export default {
     onSearch() {
       this.isFocus = false;
       this.$emit('onSearch', this.search);
-      this.$store.dispatch('updateSearchedData', this.getUniqueSearchedCities(this.search));
+      this.updateSearchedData(this.getUniqueSearchedCities(this.search));
     },
     clickOutside() {
       this.isFocus = false;
@@ -71,7 +74,7 @@ export default {
       this.isFocus = true;
     },
     onRemoveSearchedItem(item) {
-      this.$store.dispatch('removeSearchedDataItem', this.getFilteredSearchedData(item));
+      this.removeSearchedDataItem(this.getFilteredSearchedData(item));
     },
   },
 };
@@ -180,7 +183,7 @@ export default {
   &__empty {
     font-size: 16px;
     color: rgb(0, 0, 0, 0.8);
-    padding: 5px 10px;
+    padding: 15px;
   }
 }
 </style>
