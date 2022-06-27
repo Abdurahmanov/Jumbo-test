@@ -74,7 +74,6 @@ const mutations = {
       return {
         ...item,
         addressName: item.addressName.replace(/Jumbo /gi, ''),
-        id: item.uuid,
         position: { lat: Number(item.latitude), lng: Number(item.longitude) },
       };
     });

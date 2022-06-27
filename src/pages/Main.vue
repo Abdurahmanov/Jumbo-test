@@ -17,7 +17,7 @@
         <template v-slot="{ google, map }">
           <GoogleMapMarker
             v-for="(marker, index) in filteredCities ? filteredCities : getMarkers"
-            :key="marker.id"
+            :key="marker.uuid"
             :marker="marker"
             :google="google"
             :map="map"

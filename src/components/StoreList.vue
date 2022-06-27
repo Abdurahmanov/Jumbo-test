@@ -4,7 +4,7 @@
       class="list"
       ref="list"
       style="min-height: 112px; overflow-y: auto; max-height: 360px"
-      :data-key="'id'"
+      :data-key="'uuid'"
       :data-sources="getSearch"
       :data-component="item"
       :estimate-size="105"

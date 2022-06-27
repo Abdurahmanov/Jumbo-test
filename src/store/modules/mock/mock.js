@@ -130,7 +130,6 @@ export const expectedSetData = [
     complexNumber: '33010',
     distance: 0,
     favourite: false,
-    id: 'gmcKYx4X5HEAAAFIdhIYwKxK',
     isHomeStore: false,
     latitude: '52.264417',
     locationType: 'SupermarktPuP',

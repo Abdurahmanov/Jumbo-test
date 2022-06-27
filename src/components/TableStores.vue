@@ -13,7 +13,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="store in item.stores" :key="store.id">
+            <tr v-for="store in item.stores" :key="store.uuid">
               <td>{{ store.addressName }}</td>
               <td>{{ item.city }}</td>
               <td>{{ store.sundayOpen ? 'Yes' : 'No' }}</td>
