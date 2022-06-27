@@ -1,5 +1,5 @@
 import dataStore from '../dataStore';
-import { data, expectedGetUniqCities, expectedSetData, rootState } from '@/store/modules/mock/mock';
+import { data, expectedSetData } from '@/store/modules/mock/mock';
 
 describe('dataStore', () => {
   it('Should change data and isLoading when mutation setData is called', () => {
