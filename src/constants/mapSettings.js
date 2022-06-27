@@ -3,7 +3,7 @@ export const mapSettings = {
   streetViewControl: false,
   panControlOptions: false,
   gestureHandling: 'cooperative',
-  backgroundColor: '#FFAD00',
+  backgroundColor: '#edb716',
   mapTypeControl: false,
   zoomControlOptions: {
     style: 'SMALL',
@@ -14,7 +14,7 @@ export const mapSettings = {
   styles: [
     {
       featureType: 'landscape',
-      stylers: [{ hue: '#FFAD00' }, { saturation: 50.2 }, { lightness: -34.8 }, { gamma: 1 }],
+      stylers: [{ hue: '#edb716' }, { saturation: 50.2 }, { lightness: -34.8 }, { gamma: 1 }],
     },
     {
       featureType: 'poi',
@@ -22,11 +22,11 @@ export const mapSettings = {
     },
     {
       featureType: 'road.highway',
-      stylers: [{ hue: '#FFAD00' }, { saturation: -19.8 }, { lightness: -1.8 }, { gamma: 1 }],
+      stylers: [{ hue: '#edb716' }, { saturation: -19.8 }, { lightness: -1.8 }, { gamma: 1 }],
     },
     {
       featureType: 'road.arterial',
-      stylers: [{ hue: '#FFAD00' }, { saturation: 72.4 }, { lightness: -32.6 }, { gamma: 1 }],
+      stylers: [{ hue: '#edb716' }, { saturation: 72.4 }, { lightness: -32.6 }, { gamma: 1 }],
     },
     {
       featureType: 'road.local',
