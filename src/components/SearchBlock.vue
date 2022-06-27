@@ -1,27 +1,47 @@
 <template>
-  <div class="search-block">
+  <div class="search-block" v-click-outside="clickOutside">
     <input
       type="text"
       class="input"
       v-model="search"
       placeholder="Enter the name of the city"
-      @keyup.enter="$emit('onSearch', search)"
+      @keyup.enter="onSearch()"
+      @focus="onFocus()"
     />
     <button class="cross" v-show="search" @click="onClear()">+</button>
-    <button class="btn" @click="$emit('onSearch', search)">Search</button>
+    <button class="btn" @click="onSearch()">Search</button>
+    <div class="suggestion__block" v-show="isFocus" :class="{ suggestion__block_loading: getSearchedLoading }">
+      <div v-if="dataStore.searchedData.length">
+        <div
+          class="suggestion__item"
+          v-for="item in dataStore.searchedData"
+          :key="item"
+          @click="onClickSuggestion(item)"
+        >
+          {{ item }}
+          <button class="cross cross_small" @click.stop="onRemoveSearchedItem(item)">+</button>
+        </div>
+      </div>
+      <div class="suggestion__empty" v-else><p>Do a search and the city will be added</p></div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 export default {
   data() {
     return {
       search: '',
+      isFocus: false,
     };
   },
   computed: {
-    ...mapState(['cityStore']),
+    ...mapState(['dataStore']),
+    ...mapGetters(['getUniqueSearchedCities', 'getFilteredSearchedData', 'getSearchedLoading']),
+  },
+  mounted() {
+    this.$store.dispatch('getSearchedData');
   },
   watch: {
     search: function(newVal) {
@@ -34,6 +54,24 @@ export default {
     onClear() {
       this.$emit('onClear');
       this.search = '';
+    },
+    onClickSuggestion(item) {
+      this.search = item;
+      this.onSearch();
+    },
+    onSearch() {
+      this.isFocus = false;
+      this.$emit('onSearch', this.search);
+      this.$store.dispatch('updateSearchedData', this.getUniqueSearchedCities(this.search));
+    },
+    clickOutside() {
+      this.isFocus = false;
+    },
+    onFocus() {
+      this.isFocus = true;
+    },
+    onRemoveSearchedItem(item) {
+      this.$store.dispatch('removeSearchedDataItem', this.getFilteredSearchedData(item));
     },
   },
 };
@@ -88,5 +126,61 @@ export default {
   background: transparent;
   border: none;
   cursor: pointer;
+
+  &_small {
+    font-size: 30px;
+    top: 8px;
+    right: 10px;
+  }
+}
+
+.suggestion {
+  &__block {
+    position: absolute;
+    width: 100%;
+    background: white;
+    overflow-y: auto;
+    min-height: 50px;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    max-height: 200px;
+
+    &_loading {
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.5);
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &__item {
+    padding: 15px;
+    font-size: 16px;
+    color: rgb(0, 0, 0, 0.8);
+    cursor: pointer;
+    transition: 0.3s;
+    border-bottom: 1px solid #d3d3d3;
+    position: relative;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      color: rgb(0, 0, 0, 1);
+    }
+  }
+
+  &__empty {
+    font-size: 16px;
+    color: rgb(0, 0, 0, 0.8);
+    padding: 5px 10px;
+  }
 }
 </style>

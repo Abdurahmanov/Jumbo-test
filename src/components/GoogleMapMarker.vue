@@ -71,7 +71,6 @@ export default {
   },
   beforeDestroy() {
     this.m.setMap(null);
-    // this.m.removeListener("click", () => this.clickHandler(''))
   },
   render() {
     return null;
