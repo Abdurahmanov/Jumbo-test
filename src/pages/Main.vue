@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="getShowPage">
     <div class="filters">
       <div class="filters__title">Filters</div>
       <button
@@ -12,7 +12,7 @@
         {{ item.title }}
       </button>
     </div>
-    <div class="map" v-if="!this.dataStore.isLoading">
+    <div class="map">
       <GoogleMapLoader :mapConfig="mapConfig" apiKey="">
         <template v-slot="{ google, map }">
           <GoogleMapMarker
@@ -30,11 +30,16 @@
         <StoreList :getSearch="filteredCities ? filteredCities : getMarkers" :isNotFound="isNotFound" />
       </div>
     </div>
-    <div v-else>
-      <p>
-        Loading...
-      </p>
-    </div>
+  </div>
+  <div v-else-if="this.dataStore.isError">
+    <p>
+      Error
+    </p>
+  </div>
+  <div v-else>
+    <p>
+      Loading...
+    </p>
   </div>
 </template>
 
@@ -88,7 +93,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getSearchResult', 'getMarkers', 'getFilters']),
+    ...mapGetters(['getSearchResult', 'getMarkers', 'getFilters', 'getShowPage']),
     ...mapState(['dataStore']),
     isNotFound() {
       return this.filteredCities && this.filteredCities.length === 0;
@@ -97,7 +102,7 @@ export default {
     mapConfig() {
       return {
         ...mapSettings,
-        center: this.getMarkers[0].position,
+        center: this.getMarkers[0]?.position ?? {},
       };
     },
   },

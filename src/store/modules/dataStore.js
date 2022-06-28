@@ -6,6 +6,7 @@ const state = {
   searchedData: [],
   isLoadingSearchedData: false,
   isLoadingUpdateSearchedData: false,
+  isError: false,
 };
 
 const getters = {
@@ -22,10 +23,14 @@ const getters = {
   getSearchedLoading: state => {
     return state.isLoadingSearchedData || state.isLoadingUpdateSearchedData;
   },
+  getShowPage: state => {
+    return !state.isLoading && !state.isError;
+  },
 };
 
 const actions = {
   getData({ commit, state }) {
+    commit('setIsError', { flag: false });
     if (!state.data.length) {
       axios
         .get(
@@ -33,6 +38,13 @@ const actions = {
         )
         .then(res => {
           commit('setData', { result: res.data });
+        })
+        .catch(e => {
+          console.error(e);
+          commit('setIsError', { flag: true });
+        })
+        .finally(() => {
+          commit('setIsLoading', { flag: false });
         });
     }
   },
@@ -44,6 +56,9 @@ const actions = {
       )
       .then(res => {
         commit('setSearchedData', { result: res.data });
+      })
+      .catch(e => {
+        console.error(e);
       })
       .finally(() => {
         commit('setIsLoadingSearchedData', { flag: false });
@@ -58,6 +73,9 @@ const actions = {
       )
       .then(() => {
         dispatch('getSearchedData');
+      })
+      .catch(e => {
+        console.error(e);
       })
       .finally(() => {
         commit('setIsLoadingUpdateSearchedData', { flag: false });
@@ -77,7 +95,9 @@ const mutations = {
         position: { lat: Number(item.latitude), lng: Number(item.longitude) },
       };
     });
-    state.isLoading = false;
+  },
+  setIsLoading(state, { flag }) {
+    state.isLoading = flag;
   },
   setSearchedData(state, { result }) {
     state.searchedData = result;
@@ -87,6 +107,9 @@ const mutations = {
   },
   setIsLoadingUpdateSearchedData(state, { flag }) {
     state.isLoadingUpdateSearchedData = flag;
+  },
+  setIsError(state, { flag }) {
+    state.isError = flag;
   },
 };
 

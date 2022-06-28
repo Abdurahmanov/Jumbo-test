@@ -1,17 +1,22 @@
 <template>
-  <div>
+  <div v-if="getShowPage">
     <SearchBlock @onSearch="onSearch($event)" @onClear="onClear()"></SearchBlock>
-    <div class="block" v-if="!this.dataStore.isLoading">
+    <div class="block">
       <CityList :list="filteredCities ? filteredCities : getUniqCities" :isNotFound="isNotFound" />
       <TableStores
         :item="filteredCities ? filteredCities[this.cityStore.activeIndex] : getUniqCities[this.cityStore.activeIndex]"
       />
     </div>
-    <div v-else>
-      <p>
-        Loading...
-      </p>
-    </div>
+  </div>
+  <div v-else-if="this.dataStore.isError">
+    <p>
+      Error
+    </p>
+  </div>
+  <div v-else>
+    <p>
+      Loading...
+    </p>
   </div>
 </template>
 
@@ -42,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState(['dataStore', 'cityStore']),
-    ...mapGetters(['getUniqCities', 'getCitySearchResult']),
+    ...mapGetters(['getUniqCities', 'getCitySearchResult', 'getShowPage']),
     isNotFound() {
       return this.filteredCities && this.filteredCities.length === 0;
     },
