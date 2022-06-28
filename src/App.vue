@@ -1,26 +1,44 @@
 <template>
   <div id="app">
-    <Stores  />
+    <Header />
+    <div class="wrapper">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import Stores from "./components/Stores";
+import Header from '@/components/Header';
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    Stores
-  }
+    Header,
+  },
 };
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  padding: 0 30px;
+}
+
+p {
+  margin: 0;
 }
 </style>
