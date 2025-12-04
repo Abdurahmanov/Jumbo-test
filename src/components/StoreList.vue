@@ -22,12 +22,24 @@
 import Item from './StoreItem';
 import { mapGetters } from 'vuex';
 
+/**
+ * @module StoreList
+ * @description The component for the list of stores.
+ */
 export default {
   props: {
+    /**
+     * The list of stores.
+     * @type {Array}
+     */
     getSearch: {
       type: Array,
       required: true,
     },
+    /**
+     * Whether the search result is not found.
+     * @type {boolean}
+     */
     isNotFound: {
       type: Boolean,
       required: true,
@@ -36,6 +48,10 @@ export default {
   },
   data() {
     return {
+      /**
+       * The store item component.
+       * @type {object}
+       */
       item: Item,
     };
   },

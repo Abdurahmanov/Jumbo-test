@@ -20,12 +20,24 @@
 
 <script>
 import Item from '@/components/CityItem';
+/**
+ * @module CityList
+ * @description The component for the list of cities.
+ */
 export default {
   props: {
+    /**
+     * The list of cities.
+     * @type {Array}
+     */
     list: {
       type: Array,
       required: true,
     },
+    /**
+     * Whether the search result is not found.
+     * @type {boolean}
+     */
     isNotFound: {
       type: Boolean,
       required: true,
@@ -34,6 +46,10 @@ export default {
   },
   data() {
     return {
+      /**
+       * The city item component.
+       * @type {object}
+       */
       item: Item,
     };
   },

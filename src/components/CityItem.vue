@@ -8,15 +8,27 @@
 <script>
 import { mapState } from 'vuex';
 
+/**
+ * @module CityItem
+ * @description The component for a single city item.
+ */
 export default {
   name: 'item',
   props: {
+    /**
+     * The city data.
+     * @type {object}
+     */
     source: {
       type: Object,
       default() {
         return {};
       },
     },
+    /**
+     * The index of the city.
+     * @type {number}
+     */
     index: {
       type: Number,
     },
@@ -25,6 +37,9 @@ export default {
     ...mapState(['cityStore']),
   },
   methods: {
+    /**
+     * Handles the click on the item.
+     */
     clickOnItem() {
       this.$store.dispatch('getActiveIndex', this.index);
     },

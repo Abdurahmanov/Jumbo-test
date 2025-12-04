@@ -3,20 +3,40 @@ import { mapGetters } from 'vuex';
 import pin from '@/assets/pin.webp';
 import pinNew from '@/assets/pinNew.webp';
 
+/**
+ * @module GoogleMapMarker
+ * @description The component for a single Google Map marker.
+ */
 export default {
   props: {
+    /**
+     * The Google Maps instance.
+     * @type {object}
+     */
     google: {
       type: Object,
       required: true,
     },
+    /**
+     * The map instance.
+     * @type {object}
+     */
     map: {
       type: Object,
       required: true,
     },
+    /**
+     * The marker data.
+     * @type {object}
+     */
     marker: {
       type: Object,
       required: true,
     },
+    /**
+     * The index of the marker.
+     * @type {number}
+     */
     index: {
       type: Number,
       required: true,
@@ -24,7 +44,15 @@ export default {
   },
   data() {
     return {
+      /**
+       * Whether the marker has been clicked.
+       * @type {boolean}
+       */
       isClick: false,
+      /**
+       * The marker instance.
+       * @type {object}
+       */
       m: null,
     };
   },
@@ -56,6 +84,10 @@ export default {
     marker.addListener('click', () => this.clickHandler(infoWindow));
   },
   methods: {
+    /**
+     * Handles the click on the marker.
+     * @param {object} infoWindow The info window to open.
+     */
     clickHandler(infoWindow) {
       if (this.isClick) {
         infoWindow.close();

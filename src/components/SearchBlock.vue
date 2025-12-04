@@ -31,10 +31,22 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+/**
+ * @module SearchBlock
+ * @description The component for the search block.
+ */
 export default {
   data() {
     return {
+      /**
+       * The search string.
+       * @type {string}
+       */
       search: '',
+      /**
+       * Whether the input is focused.
+       * @type {boolean}
+       */
       isFocus: false,
     };
   },
@@ -54,25 +66,45 @@ export default {
   },
   methods: {
     ...mapActions(['updateSearchedData', 'removeSearchedDataItem']),
+    /**
+     * Clears the search.
+     */
     onClear() {
       this.$emit('onClear');
       this.search = '';
     },
+    /**
+     * Handles the click on a suggestion.
+     * @param {string} item The suggestion.
+     */
     onClickSuggestion(item) {
       this.search = item;
       this.onSearch();
     },
+    /**
+     * Searches for a city.
+     */
     onSearch() {
       this.isFocus = false;
       this.$emit('onSearch', this.search);
       this.updateSearchedData(this.getUniqueSearchedCities(this.search));
     },
+    /**
+     * Handles the click outside the component.
+     */
     clickOutside() {
       this.isFocus = false;
     },
+    /**
+     * Handles the focus on the input.
+     */
     onFocus() {
       this.isFocus = true;
     },
+    /**
+     * Removes a searched item.
+     * @param {string} item The item to remove.
+     */
     onRemoveSearchedItem(item) {
       this.removeSearchedDataItem(this.getFilteredSearchedData(item));
     },

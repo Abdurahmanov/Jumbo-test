@@ -17,21 +17,36 @@ import pin from '@/assets/pin.webp';
 import pinNew from '@/assets/pinNew.webp';
 import { mapState, mapActions } from 'vuex';
 
+/**
+ * @module StoreItem
+ * @description The component for a single store item.
+ */
 export default {
   name: 'item',
   props: {
+    /**
+     * The store data.
+     * @type {object}
+     */
     source: {
       type: Object,
       default() {
         return {};
       },
     },
+    /**
+     * The index of the store.
+     * @type {number}
+     */
     index: {
       type: Number,
     },
   },
   methods: {
     ...mapActions(['getCenter', 'getListItemActiveIndex', 'getZoom']),
+    /**
+     * Handles the click on the item.
+     */
     clickOnItem() {
       this.getCenter(this.source.position);
       this.getListItemActiveIndex(this.index);
@@ -40,6 +55,10 @@ export default {
   },
   computed: {
     ...mapState(['mapStore']),
+    /**
+     * The image source for the marker.
+     * @returns {string}
+     */
     imgSource() {
       return this.source.newStore !== 0 ? pinNew : pin;
     },

@@ -33,8 +33,16 @@
 </template>
 
 <script>
+/**
+ * @module TableStores
+ * @description The component for the table of stores.
+ */
 export default {
   props: {
+    /**
+     * The city data.
+     * @type {object}
+     */
     item: {
       type: Object,
     },

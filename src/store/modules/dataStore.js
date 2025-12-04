@@ -1,34 +1,91 @@
 import axios from 'axios';
 
+/**
+ * @module dataStore
+ * @description The Vuex store module for managing the application data.
+ */
 const state = {
+  /**
+   * The store data.
+   * @type {Array}
+   */
   data: [],
+  /**
+   * Whether the data is loading.
+   * @type {boolean}
+   */
   isLoading: true,
+  /**
+   * The searched data.
+   * @type {Array}
+   */
   searchedData: [],
+  /**
+   * Whether the searched data is loading.
+   * @type {boolean}
+   */
   isLoadingSearchedData: false,
+  /**
+   * Whether the searched data is updating.
+   * @type {boolean}
+   */
   isLoadingUpdateSearchedData: false,
+  /**
+   * Whether there is an error.
+   * @type {boolean}
+   */
   isError: false,
 };
 
 const getters = {
+  /**
+   * Capitalizes the first letter of a string.
+   * @returns {function} A function that takes a string and returns the capitalized string.
+   */
   capitalizeFirstLetter: () => string => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   },
+  /**
+   * Gets the unique searched cities.
+   * @param {object} state The Vuex state.
+   * @param {object} getters The Vuex getters.
+   * @returns {function} A function that takes a city and returns the unique searched cities.
+   */
   getUniqueSearchedCities: (state, getters) => data => {
     const newArr = state.searchedData.map(item => getters.capitalizeFirstLetter(item));
     return [...new Set([getters.capitalizeFirstLetter(data), ...newArr])];
   },
+  /**
+   * Gets the filtered searched data.
+   * @param {object} state The Vuex state.
+   * @returns {function} A function that takes a city and returns the filtered searched data.
+   */
   getFilteredSearchedData: state => data => {
     return state.searchedData.filter(item => item !== data);
   },
+  /**
+   * Gets the searched loading state.
+   * @param {object} state The Vuex state.
+   * @returns {boolean} The searched loading state.
+   */
   getSearchedLoading: state => {
     return state.isLoadingSearchedData || state.isLoadingUpdateSearchedData;
   },
+  /**
+   * Gets the show page state.
+   * @param {object} state The Vuex state.
+   * @returns {boolean} The show page state.
+   */
   getShowPage: state => {
     return !state.isLoading && !state.isError;
   },
 };
 
 const actions = {
+  /**
+   * Gets the data from the API.
+   * @param {object} context The Vuex context.
+   */
   getData({ commit, state }) {
     commit('setIsError', { flag: false });
     if (!state.data.length) {
@@ -48,6 +105,10 @@ const actions = {
         });
     }
   },
+  /**
+   * Gets the searched data from the API.
+   * @param {object} context The Vuex context.
+   */
   getSearchedData({ commit }) {
     commit('setIsLoadingSearchedData', { flag: true });
     axios
@@ -64,6 +125,11 @@ const actions = {
         commit('setIsLoadingSearchedData', { flag: false });
       });
   },
+  /**
+   * Updates the searched data on the API.
+   * @param {object} context The Vuex context.
+   * @param {Array} data The data to update.
+   */
   updateSearchedData({ dispatch, commit }, data) {
     commit('setIsLoadingUpdateSearchedData', { flag: true });
     axios
@@ -81,12 +147,23 @@ const actions = {
         commit('setIsLoadingUpdateSearchedData', { flag: false });
       });
   },
+  /**
+   * Removes a searched data item.
+   * @param {object} context The Vuex context.
+   * @param {Array} data The data to update.
+   */
   removeSearchedDataItem({ dispatch }, data) {
     dispatch('updateSearchedData', data);
   },
 };
 
 const mutations = {
+  /**
+   * Sets the data.
+   * @param {object} state The Vuex state.
+   * @param {object} payload The payload.
+   * @param {Array} payload.result The data.
+   */
   setData(state, { result }) {
     state.data = result.map(item => {
       return {
@@ -96,18 +173,48 @@ const mutations = {
       };
     });
   },
+  /**
+   * Sets the loading state.
+   * @param {object} state The Vuex state.
+   * @param {object} payload The payload.
+   * @param {boolean} payload.flag The loading state.
+   */
   setIsLoading(state, { flag }) {
     state.isLoading = flag;
   },
+  /**
+   * Sets the searched data.
+   * @param {object} state The Vuex state.
+   * @param {object} payload The payload.
+   * @param {Array} payload.result The searched data.
+   */
   setSearchedData(state, { result }) {
     state.searchedData = result;
   },
+  /**
+   * Sets the searched data loading state.
+   * @param {object} state The Vuex state.
+   * @param {object} payload The payload.
+   * @param {boolean} payload.flag The searched data loading state.
+   */
   setIsLoadingSearchedData(state, { flag }) {
     state.isLoadingSearchedData = flag;
   },
+  /**
+   * Sets the searched data updating state.
+   * @param {object} state The Vuex state.
+   * @param {object} payload The payload.
+   * @param {boolean} payload.flag The searched data updating state.
+   */
   setIsLoadingUpdateSearchedData(state, { flag }) {
     state.isLoadingUpdateSearchedData = flag;
   },
+  /**
+   * Sets the error state.
+   * @param {object} state The Vuex state.
+   * @param {object} payload The payload.
+   * @param {boolean} payload.flag The error state.
+   */
   setIsError(state, { flag }) {
     state.isError = flag;
   },

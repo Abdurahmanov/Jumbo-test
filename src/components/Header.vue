@@ -23,6 +23,13 @@
     </nav>
   </header>
 </template>
+<script>
+/**
+ * @module Header
+ * @description The component for the header.
+ */
+export default {};
+</script>
 
 <style lang="scss" scoped>
 .header {
