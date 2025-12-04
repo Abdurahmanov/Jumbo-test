@@ -10,15 +10,35 @@
 <script>
 import { Loader } from '@googlemaps/js-api-loader';
 
+/**
+ * @module GoogleMapLoader
+ * @description The component for loading the Google Map.
+ */
 export default {
   props: {
+    /**
+     * The map configuration.
+     * @type {object}
+     */
     mapConfig: Object,
+    /**
+     * The Google Maps API key.
+     * @type {string}
+     */
     apiKey: String,
   },
 
   data() {
     return {
+      /**
+       * The Google Maps instance.
+       * @type {object}
+       */
       google: null,
+      /**
+       * The map instance.
+       * @type {object}
+       */
       map: null,
     };
   },

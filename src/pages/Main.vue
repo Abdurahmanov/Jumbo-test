@@ -53,6 +53,11 @@ import SearchBlock from '@/components/SearchBlock';
 
 import { mapSettings } from '@/constants/mapSettings';
 import { filters } from '@/constants/filters';
+
+/**
+ * @module Main
+ * @description The main page of the application.
+ */
 export default {
   components: {
     GoogleMapLoader,
@@ -62,8 +67,20 @@ export default {
   },
   data() {
     return {
+      /**
+       * The filtered cities.
+       * @type {Array}
+       */
       filteredCities: undefined,
+      /**
+       * The filter type.
+       * @type {string}
+       */
       filterType: 'all',
+      /**
+       * The filters.
+       * @type {Array}
+       */
       filters: filters,
     };
   },
@@ -71,10 +88,18 @@ export default {
     this.$store.dispatch('getData');
   },
   methods: {
+    /**
+     * Changes the center and zoom of the map.
+     * @param {number} zoom The zoom level.
+     */
     changeCenterAndZoomMap(zoom = 10) {
       this.$store.dispatch('getCenter', this.filteredCities[0].position);
       this.$store.dispatch('getZoom', zoom);
     },
+    /**
+     * Searches for a city.
+     * @param {string} str The search string.
+     */
     onSearch(str) {
       this.filteredCities = this.getSearchResult(str);
       this.filterType = 'all';
@@ -82,10 +107,17 @@ export default {
         this.changeCenterAndZoomMap();
       }
     },
+    /**
+     * Clears the search.
+     */
     onClear() {
       this.changeCenterAndZoomMap(7);
       this.filterType = 'all';
     },
+    /**
+     * Changes the filter.
+     * @param {string} type The filter type.
+     */
     onFilterChange(type) {
       this.filteredCities = this.getFilters(type);
       this.filterType = type;
@@ -95,10 +127,17 @@ export default {
   computed: {
     ...mapGetters(['getSearchResult', 'getMarkers', 'getFilters', 'getShowPage']),
     ...mapState(['dataStore']),
+    /**
+     * Whether the search result is not found.
+     * @returns {boolean}
+     */
     isNotFound() {
       return this.filteredCities && this.filteredCities.length === 0;
     },
-
+    /**
+     * The map configuration.
+     * @returns {object}
+     */
     mapConfig() {
       return {
         ...mapSettings,

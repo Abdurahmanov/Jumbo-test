@@ -9,6 +9,10 @@
 
 <script>
 import Header from '@/components/Header';
+/**
+ * @module App
+ * @description The main component of the application.
+ */
 export default {
   name: 'App',
   components: {

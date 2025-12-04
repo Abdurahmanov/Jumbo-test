@@ -7,7 +7,11 @@ import VirtualList from 'vue-virtual-scroll-list';
 
 Vue.component('virtual-list', VirtualList);
 
-//https://stackoverflow.com/questions/36170425/detect-click-outside-element
+/**
+ * @module click-outside
+ * @description A directive to detect clicks outside an element.
+ * @see {@link https://stackoverflow.com/questions/36170425/detect-click-outside-element}
+ */
 Vue.directive('click-outside', {
   bind: function(el, binding, vnode) {
     el.clickOutsideEvent = function(event) {
